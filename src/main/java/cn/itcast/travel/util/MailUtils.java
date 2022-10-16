@@ -71,7 +71,4 @@ public final class MailUtils {
         MailUtils.sendMail("itcast_xian@163.com","你好，这是一封测试邮件，无需回复。","测试邮件");
         System.out.println("发送成功");
     }
-
-
-
 }

@@ -25,9 +25,7 @@ public class LoginServlet extends HttpServlet {
         User user = new User();
         try {
             BeanUtils.populate(user,map);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -52,17 +50,14 @@ public class LoginServlet extends HttpServlet {
         //6.判断登录成功
         if(u != null && "Y".equals(u.getStatus())){
             request.getSession().setAttribute("user",u);//登录成功标记
-
             //登录成功
             result.setFlag(true);
         }
-
         //响应数据
         ObjectMapper mapper = new ObjectMapper();
 
         response.setContentType("application/json;charset=utf-8");
         mapper.writeValue(response.getOutputStream(),result);
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

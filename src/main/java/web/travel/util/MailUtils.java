@@ -1,4 +1,4 @@
-﻿package web.travel.util;
+package web.travel.util;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

@@ -66,13 +66,12 @@ public class UserDaoImpl implements UserDao {
     public User findByCode(String code) {
         User user = null;
         try {
+            //执行sql语句
             String sql = "select * from tab_user where code = ?";
-
             user = template.queryForObject(sql,new BeanPropertyRowMapper<User>(User.class),code);
-        } catch (DataAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return user;
     }
 

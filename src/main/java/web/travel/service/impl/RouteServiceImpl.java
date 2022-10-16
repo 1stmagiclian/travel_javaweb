@@ -2,11 +2,9 @@ package web.travel.service.impl;
 
 import web.travel.dao.FavoriteDao;
 import web.travel.dao.RouteDao;
-import web.travel.dao.RouteImgDao;
 import web.travel.dao.SellerDao;
 import web.travel.dao.impl.FavoriteDaoImpl;
 import web.travel.dao.impl.RouteDaoImpl;
-import web.travel.dao.impl.RouteImgDaoImpl;
 import web.travel.dao.impl.SellerDaoImpl;
 import web.travel.domain.PageBean;
 import web.travel.domain.Route;
@@ -18,7 +16,6 @@ import java.util.List;
 
 public class RouteServiceImpl implements RouteService{
     private RouteDao dao = new RouteDaoImpl();
-    private RouteImgDao imgDao = new RouteImgDaoImpl();
     private SellerDao sellerDao = new SellerDaoImpl();
     private FavoriteDao favoriteDao = new FavoriteDaoImpl();
     @Override
@@ -45,9 +42,6 @@ public class RouteServiceImpl implements RouteService{
     @Override
     public Route findOne(String rid) {
         Route route = dao.findOne(Integer.parseInt(rid));
-
-        List<RouteImg> routeImgList = imgDao.findByRid(route.getRid());
-        route.setRouteImgList(routeImgList);
 
         Seller seller = sellerDao.findById(route.getSid());
         route.setSeller(seller);

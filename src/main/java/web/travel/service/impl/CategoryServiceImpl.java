@@ -16,7 +16,7 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao dao = new CategoryDaoImpl();
     @Override
     public List<Category> findAll() {
-        //从redis中查询
+        //使用redis进行数据缓存，避免每次访问页面都从数据库获取数据，导致mysql库访问压力过大
         Jedis jedis = JedisUtil.getJedis();
         Set<Tuple> categorys = jedis.zrangeWithScores("category", 0, -1);
         List<Category> cs = null;

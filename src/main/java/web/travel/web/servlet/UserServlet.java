@@ -23,10 +23,6 @@ public class UserServlet extends BaseServlet {
     private UserService service = new UserServiceImpl();
     /**
      * 注册功能
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     public void regist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //验证码校验
@@ -57,9 +53,7 @@ public class UserServlet extends BaseServlet {
         User user = new User();
         try {
             BeanUtils.populate(user, map);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //3.调用service
@@ -74,21 +68,11 @@ public class UserServlet extends BaseServlet {
             info.setFlag(false);
             info.setErrorMsg("注册失败！！！");
         }
-        //将info序列化为json
-       /* ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(info);
-        //将json回写客户端
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(json);*/
         writeValue(info,response);
     }
 
     /**
      * 登陆功能
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //验证码校验
@@ -104,11 +88,6 @@ public class UserServlet extends BaseServlet {
             Result info = new Result();
             info.setFlag(false);
             info.setErrorMsg("验证码错误");
-            //将info对象序列化为json
-            /*ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(info);
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(json);*/
             writeValue(info,response);
             return;
         }
@@ -119,9 +98,7 @@ public class UserServlet extends BaseServlet {
         User user = new User();
         try {
             BeanUtils.populate(user, map);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -141,19 +118,11 @@ public class UserServlet extends BaseServlet {
             request.getSession().setAttribute("user", loginUser);
             info.setFlag(true);
         }
-
-        /*ObjectMapper mapper = new ObjectMapper();
-        response.setContentType("application/json;charset=utf-8");
-        mapper.writeValue(response.getOutputStream(), info);*/
         writeValue(info,response);
     }
 
     /**
      * 查找一个
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     public void findOne(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Object user = request.getSession().getAttribute("user");
@@ -162,23 +131,16 @@ public class UserServlet extends BaseServlet {
 
     /**
      * 退出功能
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     public void exit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().invalidate();
 
+        //跳转登录页面
         response.sendRedirect(request.getContextPath() + "/login.html");
     }
 
     /**
      * 激活功能
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     public void active(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String code = request.getParameter("code");
@@ -193,8 +155,6 @@ public class UserServlet extends BaseServlet {
             }
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().write(msg);
-
-
         }
     }
 }
